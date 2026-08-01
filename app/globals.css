@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --primary: 217.2 91.2% 59.8%;
+  --primary-foreground: 0 0% 100%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 217.2 91.2% 59.8%;
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 240 5.9% 10%;
+  --card-foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 215 27.9% 16.9%;
+  --accent-foreground: 0 0% 98%;
+  --primary: 217.2 91.2% 59.8%;
+  --primary-foreground: 0 0% 100%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 217.2 91.2% 59.8%;
+}
+
+* {
+  @apply border-border;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.35);
+}
+
+.particle-field {
+  background-image:
+    radial-gradient(circle at 16px 22px, rgba(96, 165, 250, 0.38) 1px, transparent 1.5px),
+    radial-gradient(circle at 78px 48px, rgba(14, 165, 233, 0.22) 1px, transparent 1.5px);
+  background-size: 112px 112px;
+  animation: particle-drift 18s linear infinite;
+}
+
+@keyframes particle-drift {
+  from {
+    background-position: 0 0, 0 0;
+  }
+  to {
+    background-position: 112px 112px, -112px 112px;
+  }
+}
+
+.grid-mask {
+  background-image:
+    linear-gradient(to right, rgba(113, 113, 122, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(113, 113, 122, 0.12) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 78%);
+}
+
+.text-balance {
+  text-wrap: balance;
+}

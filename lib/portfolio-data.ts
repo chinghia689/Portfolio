@@ -1,0 +1,206 @@
+import {
+  Award,
+  Bot,
+  BrainCircuit,
+  Database,
+  FileText,
+  Github,
+  Linkedin,
+  Mail,
+  MapPin,
+  Server,
+  ShieldCheck,
+  Trophy,
+} from "lucide-react";
+
+export const profile = {
+  name: "Ngo Chi Nghia",
+  role: "AI Engineer | LLM | RAG | Computer Vision",
+  summary:
+    "Building production-ready AI systems with Retrieval-Augmented Generation, FastAPI, Docker and LangGraph.",
+  email: "chinghia689@gmail.com",
+  location: "Ho Chi Minh City, Vietnam",
+  github: "https://github.com/chinghia689",
+  linkedin: "https://www.linkedin.com/in/chinghia010804/",
+  resume: "/resume.pdf",
+};
+
+export const navItems = [
+  { href: "/#projects", label: "Projects" },
+  { href: "/publications", label: "Publications" },
+  { href: "/awards", label: "Awards" },
+  { href: "/resume", label: "Resume" },
+  { href: "/contact", label: "Contact" },
+];
+
+export const timeline = [
+  { year: "2022", title: "Started Information Technology" },
+  { year: "2025", title: "Research in LLM & RAG" },
+  { year: "2026", title: "AI Engineer Intern" },
+  { year: "2026", title: "ERC-RAG Paper" },
+  { year: "2026", title: "Olympic AI Finalist" },
+];
+
+export const skills = [
+  { name: "Python", level: 100 },
+  { name: "FastAPI", level: 100 },
+  { name: "LangChain", level: 90 },
+  { name: "Docker", level: 80 },
+  { name: "YOLOv8", level: 80 },
+  { name: "React", level: 70 },
+];
+
+export const projects = [
+  {
+    slug: "erc-rag",
+    title: "ERC-RAG",
+    subtitle: "Energy-Based Retrieval Clustering",
+    icon: BrainCircuit,
+    overview:
+      "ERC-RAG improves retrieval quality by clustering candidate chunks and selecting context with energy distance before answer generation.",
+    motivation:
+      "Standard vector retrieval often returns redundant or noisy chunks. ERC-RAG was built to diversify retrieved evidence and make RAG answers more faithful on large Vietnamese enterprise documents.",
+    stack: ["Python", "FastAPI", "ChromaDB", "LangChain", "Docker", "OpenAI"],
+    metrics: [
+      { name: "BLEU-2", score: "0.71" },
+      { name: "ROUGE-2", score: "0.74" },
+      { name: "Cosine", score: "0.96" },
+      { name: "Hit@5", score: "0.70" },
+    ],
+    dataset: [
+      { label: "VEID documents", value: "27,682" },
+      { label: "Chunks", value: "120,165" },
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/chinghia689/economy_rag_ebd_kmeans_llm_TIEN_PHONG_TT_VL_2026" },
+      { label: "Demo", href: "https://vietecochat.site/" },
+      { label: "Paper", href: "/papers/erc-rag.pdf" },
+    ],
+    architecture: [
+      "Question",
+      "Embedding",
+      "Retriever",
+      "KMeans",
+      "Energy Distance",
+      "LLM",
+      "Answer",
+    ],
+    gallery: ["Screenshot", "Architecture", "Chart", "GIF"],
+  },
+  {
+    slug: "polyaqua",
+    title: "PolyAqua",
+    subtitle: "Aquaculture AI platform",
+    icon: Bot,
+    overview:
+      "A production-oriented aquaculture assistant combining YOLO detection, RAG search and operational dashboards.",
+    motivation:
+      "Farm operators need fast visual screening and reliable answers from internal aquaculture documents without switching tools.",
+    stack: ["YOLO", "RAG", "Disease Detection", "BM25", "ChromaDB", "RRF"],
+    metrics: [
+      { name: "Detection", score: "YOLO" },
+      { name: "Retrieval", score: "RRF" },
+      { name: "Search", score: "BM25" },
+      { name: "Vector DB", score: "Chroma" },
+    ],
+    dataset: [
+      { label: "Vision task", value: "Disease Detection" },
+      { label: "Knowledge base", value: "Aquaculture RAG" },
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/chinghia689/AI_polyculture" },
+      { label: "Demo", href: "https://polyaqua.site/app" },
+    ],
+    architecture: ["Image", "YOLO", "Diagnosis", "Query", "Hybrid Search", "Answer"],
+    gallery: ["Detection", "Knowledge Base", "Dashboard", "Report"],
+  },
+  {
+    slug: "legal-rag",
+    title: "Legal RAG",
+    subtitle: "Dockerized legal assistant",
+    icon: ShieldCheck,
+    overview:
+      "A legal-domain RAG system with orchestrated agent flows, containerized deployment and a React/FastAPI interface.",
+    motivation:
+      "Legal search requires transparent retrieval, reproducible infrastructure and answer generation grounded in source documents.",
+    stack: ["Docker", "Nginx", "LangGraph", "React", "FastAPI", "RAG"],
+    metrics: [
+      { name: "Runtime", score: "Docker" },
+      { name: "Gateway", score: "Nginx" },
+      { name: "Agent", score: "LangGraph" },
+      { name: "API", score: "FastAPI" },
+    ],
+    dataset: [
+      { label: "Frontend", value: "React" },
+      { label: "Backend", value: "Chroma" },
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/chinghia689/doan2_DH22TIN08_NgoChiNghia_ChatbotLawITVN" },
+      { label: "Demo", href: "https://lawchat.me/" },
+    ],
+    architecture: ["Question", "Router", "Retriever", "LangGraph", "Citation", "Answer"],
+    gallery: ["Chat", "Sources", "Containers", "Deploy"],
+  },
+  {
+    slug: "cifake",
+    title: "CIFAKE",
+    subtitle: "AI-generated image classifier",
+    icon: Database,
+    overview:
+      "Computer vision experiment for distinguishing synthetic and real images with clean evaluation reporting.",
+    motivation:
+      "AI image detection is useful for media verification workflows and gives a compact benchmark for model evaluation.",
+    stack: ["Python", "PyTorch", "Computer Vision", "Evaluation"],
+    metrics: [
+      { name: "Task", score: "Binary" },
+      { name: "Domain", score: "Vision" },
+      { name: "Output", score: "Report" },
+      { name: "Focus", score: "Robustness" },
+    ],
+    dataset: [
+      { label: "Problem", value: "Real vs AI" },
+      { label: "Pipeline", value: "Train/Eval" },
+    ],
+    links: [{ label: "GitHub", href: "https://github.com/chinghia689/AI_Engineer/tree/main/Fake_Real" }],
+    architecture: ["Image", "Preprocess", "Model", "Classifier", "Score"],
+    gallery: ["Samples", "Training", "Metrics", "Confusion Matrix"],
+  },
+];
+
+export const publications = [
+  {
+    title: "ERC-RAG",
+    venue: "Submitted to CSoNet 2026",
+    href: "/papers/erc-rag.pdf",
+    icon: FileText,
+  },
+];
+
+export const experience = [
+  {
+    year: "2026",
+    title: "AI Engineer Intern",
+    company: "Tien Phong Engineering",
+    icon: Server,
+  },
+];
+
+export const awards = [
+  {
+    title: "Olympic AI",
+    result: "Finalist",
+    icon: Trophy,
+  },
+  {
+    title: "Research Portfolio",
+    result: "LLM & RAG Focus",
+    icon: Award,
+  },
+];
+
+export const contactLinks = [
+  { label: "Email", value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
+  { label: "LinkedIn", value: "linkedin.com/in/ngochinghia", href: profile.linkedin, icon: Linkedin },
+  { label: "GitHub", value: "github.com/chinghia", href: profile.github, icon: Github },
+  { label: "Location", value: profile.location, href: "#", icon: MapPin },
+];
