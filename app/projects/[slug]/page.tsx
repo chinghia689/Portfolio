@@ -42,6 +42,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   }
 
   const Icon = project.icon;
+  const visibleLinks = project.links.filter((link) => link.label !== "Demo");
 
   return (
     <main>
@@ -69,7 +70,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             </FadeIn>
             <FadeIn delay={0.08}>
               <div className="flex flex-wrap gap-3 lg:justify-end">
-                {project.links.map((link) => (
+                {visibleLinks.map((link) => (
                   <Link
                     key={link.label}
                     href={link.href}

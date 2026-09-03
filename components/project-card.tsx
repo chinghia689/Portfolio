@@ -10,6 +10,7 @@ type Project = (typeof projects)[number];
 
 export function ProjectCard({ project, index }: { project: Project; index: number }) {
   const Icon = project.icon;
+  const githubLink = project.links.find((link) => link.label === "GitHub");
 
   return (
     <FadeIn delay={index * 0.08}>
@@ -60,7 +61,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
             </Link>
             <Link
-              href={project.links[0]?.href ?? "#"}
+              href={githubLink?.href ?? "#"}
               target="_blank"
               className={cn(buttonVariants({ variant: "secondary" }))}
             >
