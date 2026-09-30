@@ -3,15 +3,17 @@ import { Download } from "lucide-react";
 import { FadeIn } from "@/components/motion";
 import { buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { experience, profile, projects, skills } from "@/lib/portfolio-data";
+import { getPortfolioContent } from "@/lib/portfolio-data";
 import { cn } from "@/lib/utils";
 
 export const metadata = {
   title: "Resume",
   description: "Resume for Ngo Chi Nghia, AI Engineer.",
 };
+export const dynamic = "force-dynamic";
 
-export default function ResumePage() {
+export default async function ResumePage() {
+  const { experience, profile, projects, skills } = await getPortfolioContent();
   return (
     <main className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
       <FadeIn>

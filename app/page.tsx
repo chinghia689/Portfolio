@@ -5,6 +5,7 @@ import {
   Github,
   Linkedin,
   Mail,
+  MapPin,
   Send,
 } from "lucide-react";
 import Image from "next/image";
@@ -14,18 +15,27 @@ import { ProjectCard } from "@/components/project-card";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
-  awards,
-  contactLinks,
-  experience,
-  profile,
-  projects,
-  publications,
-  skills,
-  timeline,
+  getPortfolioContent,
+  resolvePortfolioIcon,
 } from "@/lib/portfolio-data";
 import { cn } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
+  const contentPromise = getPortfolioContent();
+  return <HomeContent contentPromise={contentPromise} />;
+}
+
+async function HomeContent({ contentPromise }: { contentPromise: ReturnType<typeof getPortfolioContent> }) {
+  const content = await contentPromise;
+  const { awards, experience, profile, projects, publications, skills, timeline } = content;
+  const links = [
+    { label: "Email", value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
+    { label: "LinkedIn", value: profile.linkedin.replace(/^https?:\/\//, ""), href: profile.linkedin, icon: Linkedin },
+    { label: "GitHub", value: profile.github.replace(/^https?:\/\//, ""), href: profile.github, icon: Github },
+    { label: "Location", value: profile.location, href: "#", icon: MapPin },
+  ];
   return (
     <main>
       <section className="relative overflow-hidden">
@@ -88,7 +98,7 @@ export default function Home() {
                 </div>
                 <div className="mx-auto flex h-40 w-40 items-center justify-center rounded-full border border-primary/40 bg-primary/10 text-5xl font-semibold text-primary">
                   <Image
-                    src="/avatar.jpg"
+                    src={profile.avatar || "/avatar.jpg"}
                     alt="Ngo Chi Nghia"
                     width={180}
                     height={180}
@@ -118,7 +128,7 @@ export default function Home() {
             <div className="flex h-full items-center justify-center rounded-md bg-muted">
               <div className="text-center">
                 <Image
-                  src="/avatar.jpg"
+                  src={profile.avatar || "/avatar.jpg"}
                   alt="Ngo Chi Nghia"
                   width={180}
                   height={180}
@@ -202,8 +212,8 @@ export default function Home() {
           </h2>
         </FadeIn>
         <div className="mt-10 grid gap-5">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.slug} project={project} index={index} />
+            {projects.map((project, index) => (
+            <ProjectCard key={project.slug} project={{ ...project, icon: resolvePortfolioIcon(project.icon) }} index={index} />
           ))}
         </div>
       </section>
@@ -269,7 +279,7 @@ export default function Home() {
           <FadeIn delay={0.08}>
             <Card className="p-6">
               <div className="grid gap-4">
-                {contactLinks.map((link) => {
+                {links.map((link) => {
                   const Icon = link.icon;
                   return (
                     <Link

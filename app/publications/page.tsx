@@ -2,14 +2,16 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { FadeIn } from "@/components/motion";
 import { Card } from "@/components/ui/card";
-import { publications } from "@/lib/portfolio-data";
+import { getPortfolioContent, resolvePortfolioIcon } from "@/lib/portfolio-data";
 
 export const metadata = {
   title: "Publications",
   description: "Research publications by Ngo Chi Nghia.",
 };
+export const dynamic = "force-dynamic";
 
-export default function PublicationsPage() {
+export default async function PublicationsPage() {
+  const { publications } = await getPortfolioContent();
   return (
     <main className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <FadeIn>
@@ -20,7 +22,7 @@ export default function PublicationsPage() {
       </FadeIn>
       <div className="mt-10 grid gap-5 md:grid-cols-2">
         {publications.map((publication) => {
-          const Icon = publication.icon;
+          const Icon = resolvePortfolioIcon(publication.icon);
           return (
             <FadeIn key={publication.title}>
               <Card className="p-6">

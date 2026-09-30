@@ -1,16 +1,23 @@
 import Link from "next/link";
-import { Send } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin, Send } from "lucide-react";
 import { FadeIn } from "@/components/motion";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { contactLinks } from "@/lib/portfolio-data";
+import { getPortfolioContent } from "@/lib/portfolio-data";
 
 export const metadata = {
   title: "Contact",
   description: "Contact Ngo Chi Nghia for AI Engineering roles and collaboration.",
 };
+export const dynamic = "force-dynamic";
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const { profile } = await getPortfolioContent();
+  const contactLinks = [
+    { label: "Email", value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
+    { label: "LinkedIn", value: profile.linkedin.replace(/^https?:\/\//, ""), href: profile.linkedin, icon: Linkedin },
+    { label: "GitHub", value: profile.github.replace(/^https?:\/\//, ""), href: profile.github, icon: Github },
+    { label: "Location", value: profile.location, href: "#", icon: MapPin },
+  ];
   return (
     <main className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[0.8fr_1fr] lg:px-8">
       <FadeIn>
@@ -45,10 +52,10 @@ export default function ContactPage() {
               );
             })}
           </div>
-          <Button className="mt-6 w-full">
+          <a href={`mailto:${profile.email}`} className="mt-6 flex h-10 w-full items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground">
             <Send className="h-4 w-4" />
             Send Message
-          </Button>
+          </a>
         </Card>
       </FadeIn>
     </main>

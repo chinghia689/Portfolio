@@ -1,11 +1,19 @@
 import Link from "next/link";
 import { Github } from "lucide-react";
-import { navItems, profile } from "@/lib/portfolio-data";
+import { getPortfolioContent } from "@/lib/portfolio-data";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const { profile } = await getPortfolioContent();
+  const navItems = [
+    { href: "/#projects", label: "Projects" },
+    { href: "/publications", label: "Publications" },
+    { href: "/awards", label: "Awards" },
+    { href: "/resume", label: "Resume" },
+    { href: "/contact", label: "Contact" },
+  ];
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/82 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">

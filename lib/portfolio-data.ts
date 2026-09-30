@@ -12,6 +12,10 @@ import {
   ShieldCheck,
   Trophy,
 } from "lucide-react";
+import { randomUUID } from "node:crypto";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { neon } from "@neondatabase/serverless";
 
 export const profile = {
   name: "Ngo Chi Nghia",
@@ -23,6 +27,7 @@ export const profile = {
   github: "https://github.com/chinghia689",
   linkedin: "https://www.linkedin.com/in/chinghia010804/",
   resume: "/resume.pdf",
+  avatar: "/avatar.jpg",
 };
 
 export const navItems = [
@@ -204,3 +209,102 @@ export const contactLinks = [
   { label: "GitHub", value: "github.com/chinghia", href: profile.github, icon: Github },
   { label: "Location", value: profile.location, href: "#", icon: MapPin },
 ];
+
+const iconByName = {
+  BrainCircuit,
+  Bot,
+  ShieldCheck,
+  Database,
+  FileText,
+  Server,
+  Trophy,
+  Award,
+  Mail,
+  Linkedin,
+  Github,
+  MapPin,
+} as const;
+
+export type PortfolioContent = {
+  profile: typeof profile;
+  timeline: typeof timeline;
+  skills: typeof skills;
+  projects: Array<Omit<(typeof projects)[number], "icon" | "gallery"> & {
+    icon: string;
+    gallery: Array<string | { url: string; type?: string; caption?: string }>;
+  }>;
+  publications: Array<Omit<(typeof publications)[number], "icon"> & { icon: string }>;
+  experience: Array<Omit<(typeof experience)[number], "icon"> & { icon: string }>;
+  awards: Array<Omit<(typeof awards)[number], "icon"> & { icon: string }>;
+};
+
+const dataFile = path.join(process.cwd(), "data", "portfolio.json");
+let schemaReady: Promise<void> | undefined;
+
+function getDatabase() {
+  const connectionString = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
+  return connectionString ? neon(connectionString) : null;
+}
+
+async function ensurePortfolioTable(sql: NonNullable<ReturnType<typeof getDatabase>>) {
+  schemaReady ??= sql`CREATE TABLE IF NOT EXISTS portfolio_content (
+    id text PRIMARY KEY,
+    content jsonb NOT NULL,
+    updated_at timestamptz NOT NULL DEFAULT now()
+  )`.then(() => undefined);
+  await schemaReady;
+}
+
+function getDefaultPortfolioContent(): PortfolioContent {
+  const iconName = (icon: unknown) =>
+    Object.entries(iconByName).find(([, component]) => component === icon)?.[0] ?? "FileText";
+  return {
+    profile,
+    timeline,
+    skills,
+    projects: projects.map(({ icon, ...project }) => ({ ...project, icon: iconName(icon) })),
+    publications: publications.map(({ icon, ...item }) => ({ ...item, icon: iconName(icon) })),
+    experience: experience.map(({ icon, ...item }) => ({ ...item, icon: iconName(icon) })),
+    awards: awards.map(({ icon, ...item }) => ({ ...item, icon: iconName(icon) })),
+  };
+}
+
+export async function getPortfolioContent(): Promise<PortfolioContent> {
+  const sql = getDatabase();
+  if (sql) {
+    await ensurePortfolioTable(sql);
+    const rows = await sql`SELECT content FROM portfolio_content WHERE id = 'main'`;
+    return (rows[0]?.content as PortfolioContent | undefined) ?? getDefaultPortfolioContent();
+  }
+
+  let stored: string;
+  try {
+    stored = await readFile(dataFile, "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    return getDefaultPortfolioContent();
+  }
+  return JSON.parse(stored) as PortfolioContent;
+}
+
+export async function savePortfolioContent(content: PortfolioContent) {
+  const sql = getDatabase();
+  if (sql) {
+    await ensurePortfolioTable(sql);
+    const json = JSON.stringify(content);
+    await sql`INSERT INTO portfolio_content (id, content, updated_at)
+      VALUES ('main', ${json}::jsonb, now())
+      ON CONFLICT (id) DO UPDATE SET content = EXCLUDED.content, updated_at = now()`;
+    return;
+  }
+
+  const directory = path.dirname(dataFile);
+  await mkdir(directory, { recursive: true });
+  const temporary = `${dataFile}.${randomUUID()}.tmp`;
+  await writeFile(temporary, `${JSON.stringify(content, null, 2)}\n`, "utf8");
+  await rename(temporary, dataFile);
+}
+
+export function resolvePortfolioIcon(name: string) {
+  return iconByName[name as keyof typeof iconByName] ?? FileText;
+}

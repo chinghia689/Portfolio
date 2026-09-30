@@ -5,8 +5,12 @@ import { FadeIn, MotionDiv } from "@/components/motion";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { projects } from "@/lib/portfolio-data";
+import type { LucideIcon } from "lucide-react";
 
-type Project = (typeof projects)[number];
+type Project = Omit<(typeof projects)[number], "icon" | "gallery"> & {
+  icon: LucideIcon;
+  gallery: Array<string | { url: string; type?: string; caption?: string }>;
+};
 
 export function ProjectCard({ project, index }: { project: Project; index: number }) {
   const Icon = project.icon;

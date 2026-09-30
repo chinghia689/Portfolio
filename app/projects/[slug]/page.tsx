@@ -6,21 +6,20 @@ import { ArchitectureFlow } from "@/components/architecture-flow";
 import { FadeIn } from "@/components/motion";
 import { buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { projects } from "@/lib/portfolio-data";
+import { getPortfolioContent, resolvePortfolioIcon } from "@/lib/portfolio-data";
 import { cn } from "@/lib/utils";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const { projects } = await getPortfolioContent();
   const project = projects.find((item) => item.slug === slug);
 
   if (!project) {
@@ -35,13 +34,14 @@ export async function generateMetadata({
 
 export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   const { slug } = await params;
+  const { projects } = await getPortfolioContent();
   const project = projects.find((item) => item.slug === slug);
 
   if (!project) {
     notFound();
   }
 
-  const Icon = project.icon;
+  const Icon = resolvePortfolioIcon(project.icon);
   const visibleLinks = project.links.filter((link) => link.label !== "Demo");
 
   return (
@@ -170,15 +170,26 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             <h2 className="text-3xl font-semibold">Gallery</h2>
           </FadeIn>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {project.gallery.map((item, index) => (
-              <FadeIn key={item} delay={index * 0.04}>
-                <div className="aspect-[4/3] rounded-lg border border-border bg-background p-4">
-                  <div className="flex h-full items-center justify-center rounded-md bg-muted text-sm font-medium text-muted-foreground">
-                    {item}
+            {project.gallery.map((entry, index) => {
+              const media = typeof entry === "string" ? null : entry;
+              return (
+                <FadeIn key={media?.url ?? `${entry}-${index}`} delay={index * 0.04}>
+                  <div className="overflow-hidden rounded-md border border-border bg-background">
+                    {media?.type === "video" || media?.url?.match(/\.(mp4|webm)$/i) ? (
+                      <video src={media.url} controls className="aspect-[4/3] w-full object-cover" />
+                    ) : media ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={media.url} alt={media.caption ?? project.title} className="aspect-[4/3] w-full object-cover" />
+                    ) : (
+                      <div className="flex aspect-[4/3] items-center justify-center bg-muted px-4 text-sm text-muted-foreground">
+                        {typeof entry === "string" ? entry : entry.caption ?? entry.url}
+                      </div>
+                    )}
+                    {media?.caption ? <p className="p-3 text-sm text-muted-foreground">{media.caption}</p> : null}
                   </div>
-                </div>
-              </FadeIn>
-            ))}
+                </FadeIn>
+              );
+            })}
           </div>
         </div>
       </section>
