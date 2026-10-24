@@ -19,11 +19,11 @@ import { neon } from "@neondatabase/serverless";
 
 export const profile = {
   name: "Ngo Chi Nghia",
-  role: "AI Engineer | GenAI, RAG & Retrieval Evaluation",
+  role: "AI Engineer | GenAI, LLM & RAG",
   summary:
     "Building and evaluating AI applications with retrieval-augmented generation, Python APIs, and modern web tools.",
   email: "chinghia689@gmail.com",
-  location: "Ho Chi Minh City, Vietnam",
+  location: "Can Tho, Vietnam",
   github: "https://github.com/chinghia689",
   linkedin: "https://www.linkedin.com/in/chinghia010804/",
   resume: "/resume.pdf",
@@ -62,15 +62,15 @@ export const projects = [
     subtitle: "Energy-Based Retrieval Clustering",
     icon: BrainCircuit,
     overview:
-      "Research prototype testing whether energy-distance-based cluster selection can improve retrieved context over a multilingual-E5 cosine baseline. Comparative results are still being validated.",
+      "Research prototype for Vietnamese economic question answering using multilingual-E5 candidates, K-Means clustering, energy-distance ranking, and LLM relevance filtering. Reported retrieval and generation metrics are documented with comparison limitations.",
     motivation:
-      "The project studies whether grouping candidate passages before context selection can reduce noisy or redundant evidence in Vietnamese economic question answering.",
+      "The project evaluates cluster-based context selection for Vietnamese economic question answering. Existing ERC-RAG and cosine results come from separate runs, so they do not establish a retrieval improvement.",
     stack: ["Python", "FastAPI", "ChromaDB", "LangChain", "Docker", "OpenAI"],
     metrics: [
-      { name: "Cosine baseline MRR", score: "0.7352" },
-      { name: "Cosine baseline Hit@5", score: "0.8040" },
-      { name: "Cosine baseline NDCG@5", score: "0.9805" },
-      { name: "ERC comparison", score: "In progress" },
+      { name: "ERC-RAG MRR", score: "0.62" },
+      { name: "ERC-RAG NDCG@5", score: "0.83" },
+      { name: "ERC-RAG ROUGE-2 F1", score: "0.68" },
+      { name: "ERC-RAG BLEU-2", score: "0.65" },
     ],
     dataset: [
       { label: "VEID documents", value: "27,682" },
@@ -175,7 +175,7 @@ export const projects = [
 export const publications = [
   {
     title: "ERC-RAG",
-    venue: "Submitted to CSoNet 2026",
+    venue: "Submitted to ICEIR 2026 · Under review",
     href: "/papers/erc-rag.pdf",
     icon: FileText,
   },
