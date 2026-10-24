@@ -61,7 +61,7 @@ export const projects = [
     evaluation:
       "Evaluated 1,000 automatically generated VNEIQAD question-answer pairs over 120,165 VEID chunks. Retrieval: MRR 0.62 and NDCG@5 0.83. Answer generation with GPT-5.0 mini: ROUGE-2 F1 0.68 and BLEU-2 0.65.",
     limitations:
-      "The report compares generation scores against an earlier group system using GPT-4o-mini, so the model settings are not matched. A separate multilingual-E5 cosine top-5 run reports MRR 0.7352, Hit@5 0.8040, and NDCG@5 0.9805; it has not been rerun under confirmed identical settings. These results do not establish that ERC-RAG improves retrieval.",
+      "The VNEIQAD questions were automatically generated, so the reported scores should be treated as preliminary rather than as an independently curated benchmark. The answer-generation comparison with the earlier group system is also not controlled because it used GPT-4o-mini instead of GPT-5.0 mini.",
     stack: ["Python", "FastAPI", "ChromaDB", "LangChain", "Docker", "OpenAI"],
     metrics: [
       { category: "Retrieval", name: "MRR", score: "0.62" },
