@@ -12,7 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ngochinghia.dev"),
+  metadataBase: new URL("https://portfolio-chinghia.vercel.app"),
   title: {
     default: "Ngo Chi Nghia | AI Engineer",
     template: "%s | Ngo Chi Nghia",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     title: "Ngo Chi Nghia | AI Engineer",
     description:
       "Production-ready AI systems with Retrieval-Augmented Generation, FastAPI, Docker and LangGraph.",
-    url: "https://ngochinghia.dev",
+    url: "https://portfolio-chinghia.vercel.app",
     siteName: "Ngo Chi Nghia Portfolio",
     locale: "en_US",
     type: "website",
