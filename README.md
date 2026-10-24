@@ -1,17 +1,40 @@
-# Portfolio
+# Ngo Chi Nghia — AI Engineer Portfolio
 
-## Admin
+Personal portfolio for selected GenAI, retrieval, computer-vision, and software projects.
 
-Set `ADMIN_PASSWORD` in the server environment, then open `/admin`. The admin session
-uses an HTTP-only cookie. On Vercel, portfolio content is stored in Neon Postgres and
-uploaded media is stored in Vercel Blob. Without those integrations, local development
-uses `data/portfolio.json` and `data/uploads` as a fallback.
+**Live site:** [portfolio-chinghia.vercel.app](https://portfolio-chinghia.vercel.app)
 
-Run locally with:
+**GitHub:** [@chinghia689](https://github.com/chinghia689) · **LinkedIn:** [linkedin.com/in/chinghia010804](https://www.linkedin.com/in/chinghia010804/)
 
-```sh
-ADMIN_PASSWORD='choose-a-long-unique-password' npm run dev
+## Features
+
+- Project pages with problem context, implementation details, and evaluation status
+- Publications, awards, résumé, and contact pages
+- Responsive Next.js interface with light and dark themes
+- Admin-managed portfolio content; Neon Postgres and Vercel Blob are optional production integrations
+
+## Stack
+
+Next.js 15 · React 19 · TypeScript · Tailwind CSS · Neon Postgres · Vercel Blob
+
+## Run locally
+
+Requires Node.js 20 or newer.
+
+```bash
+npm ci
+npm run dev
 ```
 
-The Vercel Blob SDK requires Node.js 20 or newer. Vercel project `portfolio-8zgt` uses
-Node.js 24. Keep secrets in environment variables; never commit `.env.local`.
+Run the available checks before opening a pull request:
+
+```bash
+npm run lint
+npm run build
+```
+
+To use the admin page locally, set `ADMIN_PASSWORD` in your environment and open `/admin`. Keep `.env.local` and production credentials out of Git.
+
+## Content
+
+The source defaults are in `lib/portfolio-data.ts`. In deployments with Neon configured, saved admin content takes precedence over those defaults. Update both the default content and the admin-managed content when changing public project claims.

@@ -19,9 +19,9 @@ import { neon } from "@neondatabase/serverless";
 
 export const profile = {
   name: "Ngo Chi Nghia",
-  role: "AI Engineer | LLM | RAG | Computer Vision",
+  role: "AI Engineer | GenAI, RAG & Retrieval Evaluation",
   summary:
-    "Building production-ready AI systems with Retrieval-Augmented Generation, FastAPI, Docker and LangGraph.",
+    "Building and evaluating AI applications with retrieval-augmented generation, Python APIs, and modern web tools.",
   email: "chinghia689@gmail.com",
   location: "Ho Chi Minh City, Vietnam",
   github: "https://github.com/chinghia689",
@@ -62,15 +62,15 @@ export const projects = [
     subtitle: "Energy-Based Retrieval Clustering",
     icon: BrainCircuit,
     overview:
-      "ERC-RAG improves retrieval quality by clustering candidate chunks and selecting context with energy distance before answer generation.",
+      "Research prototype testing whether energy-distance-based cluster selection can improve retrieved context over a multilingual-E5 cosine baseline. Comparative results are still being validated.",
     motivation:
-      "Standard vector retrieval often returns redundant or noisy chunks. ERC-RAG was built to diversify retrieved evidence and make RAG answers more faithful on large Vietnamese enterprise documents.",
+      "The project studies whether grouping candidate passages before context selection can reduce noisy or redundant evidence in Vietnamese economic question answering.",
     stack: ["Python", "FastAPI", "ChromaDB", "LangChain", "Docker", "OpenAI"],
     metrics: [
-      { name: "BLEU-2", score: "0.71" },
-      { name: "ROUGE-2", score: "0.74" },
-      { name: "Cosine", score: "0.96" },
-      { name: "Hit@5", score: "0.70" },
+      { name: "Cosine baseline MRR", score: "0.7352" },
+      { name: "Cosine baseline Hit@5", score: "0.8040" },
+      { name: "Cosine baseline NDCG@5", score: "0.9805" },
+      { name: "ERC comparison", score: "In progress" },
     ],
     dataset: [
       { label: "VEID documents", value: "27,682" },
@@ -125,22 +125,22 @@ export const projects = [
     subtitle: "Dockerized legal assistant",
     icon: ShieldCheck,
     overview:
-      "A legal-domain RAG system with orchestrated agent flows, containerized deployment and a React/FastAPI interface.",
+      "A Vietnamese legal-document RAG prototype with hybrid ChromaDB/BM25 retrieval and a FastAPI, LangGraph, and React application.",
     motivation:
-      "Legal search requires transparent retrieval, reproducible infrastructure and answer generation grounded in source documents.",
+      "Legal search needs traceable source retrieval and careful evaluation of both retrieved provisions and generated answers.",
     stack: ["Docker", "Nginx", "LangGraph", "React", "FastAPI", "RAG"],
     metrics: [
-      { name: "Runtime", score: "Docker" },
-      { name: "Gateway", score: "Nginx" },
-      { name: "Agent", score: "LangGraph" },
-      { name: "API", score: "FastAPI" },
+      { name: "Retrieval pilot", score: "27/30" },
+      { name: "Retrieval scope", score: "Top-20" },
+      { name: "Answer accuracy", score: "Not evaluated" },
+      { name: "Workflow", score: "LangGraph" },
     ],
     dataset: [
-      { label: "Frontend", value: "React" },
-      { label: "Backend", value: "Chroma" },
+      { label: "Source documents", value: "6" },
+      { label: "Indexed chunks", value: "1,035" },
     ],
     links: [
-      { label: "GitHub", href: "https://github.com/chinghia689/doan2_DH22TIN08_NgoChiNghia_ChatbotLawITVN" },
+      { label: "GitHub", href: "https://github.com/chinghia689/vietnamese-legal-rag" },
       { label: "Demo", href: "https://lawchat.me/" },
     ],
     architecture: ["Question", "Router", "Retriever", "LangGraph", "Citation", "Answer"],
@@ -205,8 +205,8 @@ export const awards = [
 
 export const contactLinks = [
   { label: "Email", value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
-  { label: "LinkedIn", value: "linkedin.com/in/ngochinghia", href: profile.linkedin, icon: Linkedin },
-  { label: "GitHub", value: "github.com/chinghia", href: profile.github, icon: Github },
+  { label: "LinkedIn", value: "linkedin.com/in/chinghia010804", href: profile.linkedin, icon: Linkedin },
+  { label: "GitHub", value: "github.com/chinghia689", href: profile.github, icon: Github },
   { label: "Location", value: profile.location, href: "#", icon: MapPin },
 ];
 
