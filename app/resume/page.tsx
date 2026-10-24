@@ -41,6 +41,9 @@ export default async function ResumePage() {
               <p className="text-sm text-muted-foreground">
                 {item.company} - {item.year}
               </p>
+              <ul className="mt-3 grid gap-2 text-sm leading-6 text-muted-foreground">
+                {item.bullets.map((bullet) => <li key={bullet}>• {bullet}</li>)}
+              </ul>
             </div>
           ))}
         </ResumeBlock>
@@ -53,14 +56,12 @@ export default async function ResumePage() {
           ))}
         </ResumeBlock>
         <ResumeBlock title="Skills">
-          <div className="flex flex-wrap gap-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             {skills.map((skill) => (
-              <span
-                key={skill.name}
-                className="rounded-md border border-border bg-background px-3 py-1 text-sm"
-              >
-                {skill.name}
-              </span>
+              <div key={skill.category} className="rounded-md border border-border bg-background p-4">
+                <h3 className="font-medium">{skill.category}</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{skill.items.join(" · ")}</p>
+              </div>
             ))}
           </div>
         </ResumeBlock>

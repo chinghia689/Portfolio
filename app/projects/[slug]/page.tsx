@@ -42,7 +42,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   }
 
   const Icon = resolvePortfolioIcon(project.icon);
-  const visibleLinks = project.links.filter((link) => link.label !== "Demo");
+  const visibleLinks = project.links;
 
   return (
     <main>
@@ -67,6 +67,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                 {project.title}
               </h1>
               <p className="mt-4 text-xl text-muted-foreground">{project.subtitle}</p>
+              {project.period ? <p className="mt-3 text-sm text-muted-foreground">{project.period}</p> : null}
             </FadeIn>
             <FadeIn delay={0.08}>
               <div className="flex flex-wrap gap-3 lg:justify-end">
@@ -142,29 +143,32 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         <FadeIn delay={0.08}>
           <Card className="p-6">
             <h2 className="text-2xl font-semibold">Results</h2>
-            <div className="mt-5 overflow-hidden rounded-md border border-border">
-              <table className="w-full text-sm">
-                <thead className="bg-muted text-left">
-                  <tr>
-                    <th className="px-4 py-3 font-medium">Metric</th>
-                    <th className="px-4 py-3 font-medium">Score</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {project.metrics.map((metric) => (
-                    <tr key={metric.name} className="border-t border-border">
-                      <td className="px-4 py-3 text-muted-foreground">{metric.name}</td>
-                      <td className="px-4 py-3 font-semibold">{metric.score}</td>
-                    </tr>
+            {[...new Set(project.metrics.map((metric) => metric.category))].map((category) => (
+              <div key={category} className="mt-5">
+                <h3 className="text-sm font-semibold text-primary">{category}</h3>
+                <div className="mt-2 overflow-hidden rounded-md border border-border">
+                  {project.metrics.filter((metric) => metric.category === category).map((metric) => (
+                    <div key={metric.name} className="flex items-center justify-between gap-4 border-t border-border px-4 py-3 first:border-t-0">
+                      <span className="text-sm text-muted-foreground">{metric.name}</span>
+                      <span className="text-sm font-semibold">{metric.score}</span>
+                    </div>
                   ))}
-                </tbody>
-              </table>
-            </div>
+                </div>
+              </div>
+            ))}
           </Card>
         </FadeIn>
       </section>
 
-      <section className="border-y border-border bg-card/35">
+      {project.contribution || project.evaluation || project.limitations ? <section className="border-y border-border bg-card/35">
+        <div className="mx-auto grid max-w-7xl gap-5 px-4 py-16 sm:px-6 lg:grid-cols-3 lg:px-8">
+          {project.contribution ? <Card className="p-6"><h2 className="text-xl font-semibold">My contribution</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">{project.contribution}</p></Card> : null}
+          {project.evaluation ? <Card className="p-6"><h2 className="text-xl font-semibold">Evaluation</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">{project.evaluation}</p></Card> : null}
+          {project.limitations ? <Card className="p-6"><h2 className="text-xl font-semibold">Limitations</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">{project.limitations}</p></Card> : null}
+        </div>
+      </section> : null}
+
+      {project.gallery.length ? <section className="border-y border-border bg-card/35">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <FadeIn>
             <h2 className="text-3xl font-semibold">Gallery</h2>
@@ -192,7 +196,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             })}
           </div>
         </div>
-      </section>
+      </section> : null}
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <FadeIn>

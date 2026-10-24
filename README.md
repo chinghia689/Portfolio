@@ -37,4 +37,4 @@ To use the admin page locally, set `ADMIN_PASSWORD` in your environment and open
 
 ## Content
 
-The source defaults are in `lib/portfolio-data.ts`. In deployments with Neon configured, saved admin content takes precedence over those defaults. Update both the default content and the admin-managed content when changing public project claims.
+The source defaults are in `lib/portfolio-data.ts`. In deployments with Neon configured, admin-saved content takes precedence when it uses the current schema. Older records with percentage-based skills fall back to the CV-aligned defaults; save them from `/admin` to migrate to the current schema. Keep production credentials out of Git.

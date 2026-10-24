@@ -44,8 +44,8 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
                 ))}
               </div>
             </div>
-            <div className="grid min-w-56 gap-3">
-              {project.metrics.slice(0, 3).map((metric) => (
+          <div className="grid min-w-56 gap-3">
+              {project.metrics.filter((metric) => metric.category === "Retrieval").slice(0, 3).map((metric) => (
                 <div
                   key={metric.name}
                   className="flex items-center justify-between rounded-md bg-muted px-4 py-3 text-sm"
@@ -72,6 +72,17 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
               <Github className="h-4 w-4" />
               GitHub
             </Link>
+            {project.links.filter((link) => link.label === "Demo").map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                className={cn(buttonVariants({ variant: "secondary" }))}
+              >
+                Live demo
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            ))}
           </div>
         </Card>
       </MotionDiv>

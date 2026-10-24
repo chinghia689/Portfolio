@@ -9,6 +9,8 @@ export async function SiteHeader() {
   const { profile } = await getPortfolioContent();
   const navItems = [
     { href: "/#projects", label: "Projects" },
+    { href: "/#experience", label: "Experience" },
+    { href: "/#skills", label: "Skills" },
     { href: "/publications", label: "Publications" },
     { href: "/awards", label: "Awards" },
     { href: "/resume", label: "Resume" },

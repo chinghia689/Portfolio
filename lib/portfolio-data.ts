@@ -1,8 +1,6 @@
 import {
   Award,
-  Bot,
   BrainCircuit,
-  Database,
   FileText,
   Github,
   Linkedin,
@@ -10,7 +8,6 @@ import {
   MapPin,
   Server,
   ShieldCheck,
-  Trophy,
 } from "lucide-react";
 import { randomUUID } from "node:crypto";
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
@@ -21,7 +18,7 @@ export const profile = {
   name: "Ngo Chi Nghia",
   role: "AI Engineer | GenAI, LLM & RAG",
   summary:
-    "Building and evaluating AI applications with retrieval-augmented generation, Python APIs, and modern web tools.",
+    "I build and evaluate RAG systems for Vietnamese domains, spanning retrieval methods, retrieval and answer evaluation, FastAPI services, and Docker-based deployment.",
   email: "chinghia689@gmail.com",
   location: "Can Tho, Vietnam",
   github: "https://github.com/chinghia689",
@@ -38,21 +35,14 @@ export const navItems = [
   { href: "/contact", label: "Contact" },
 ];
 
-export const timeline = [
-  { year: "2022", title: "Started Information Technology" },
-  { year: "2025", title: "Research in LLM & RAG" },
-  { year: "2026", title: "AI Engineer Intern" },
-  { year: "2026", title: "ERC-RAG Paper" },
-  { year: "2026", title: "Olympic AI Finalist" },
-];
-
 export const skills = [
-  { name: "Python", level: 100 },
-  { name: "FastAPI", level: 100 },
-  { name: "LangChain", level: 90 },
-  { name: "Docker", level: 80 },
-  { name: "YOLOv8", level: 80 },
-  { name: "React", level: 70 },
+  { category: "Programming", items: ["Python"] },
+  { category: "LLM & RAG", items: ["OpenAI API", "Gemini API", "Groq API", "RAG", "Prompt engineering"] },
+  { category: "Retrieval", items: ["multilingual-E5", "ChromaDB", "BM25", "Hybrid retrieval", "Reciprocal Rank Fusion (RRF)", "K-Means", "Energy distance"] },
+  { category: "Evaluation", items: ["MRR", "NDCG@5", "ROUGE-2", "BLEU-2"] },
+  { category: "Backend & Deployment", items: ["FastAPI", "LangChain", "LangGraph", "Docker", "Docker Compose", "Ubuntu Linux"] },
+  { category: "Tools & Data", items: ["Git", "GitHub", "NumPy", "Pandas", "Claude Code", "OpenAI Codex CLI"] },
+  { category: "Languages", items: ["Vietnamese (Native)", "English (VSTEP B1)"] },
 ];
 
 export const projects = [
@@ -60,25 +50,31 @@ export const projects = [
     slug: "erc-rag",
     title: "ERC-RAG",
     subtitle: "Energy-Based Retrieval Clustering",
+    period: "Mar–Jul 2026",
     icon: BrainCircuit,
     overview:
-      "Research prototype for Vietnamese economic question answering using multilingual-E5 candidates, K-Means clustering, energy-distance ranking, and LLM relevance filtering. Reported retrieval and generation metrics are documented with comparison limitations.",
+      "A research prototype for Vietnamese economic question answering. It retrieves 40 multilingual-E5 candidates, clusters them with K-Means using silhouette-based selection, ranks clusters by energy distance, then applies LLM relevance filtering.",
     motivation:
-      "The project evaluates cluster-based context selection for Vietnamese economic question answering. Existing ERC-RAG and cosine results come from separate runs, so they do not establish a retrieval improvement.",
+      "The project studies cluster-level retrieval and context selection for Vietnamese economic questions using the VEID corpus and VNEIQAD benchmark.",
+    contribution:
+      "Designed and implemented the retrieval pipeline, integrated the LLM relevance-filtering stage, and ran retrieval and answer-generation experiments as a co-author.",
+    evaluation:
+      "Evaluated 1,000 automatically generated VNEIQAD question-answer pairs over 120,165 VEID chunks. Retrieval: MRR 0.62 and NDCG@5 0.83. Answer generation with GPT-5.0 mini: ROUGE-2 F1 0.68 and BLEU-2 0.65.",
+    limitations:
+      "The report compares generation scores against an earlier group system using GPT-4o-mini, so the model settings are not matched. A separate multilingual-E5 cosine top-5 run reports MRR 0.7352, Hit@5 0.8040, and NDCG@5 0.9805; it has not been rerun under confirmed identical settings. These results do not establish that ERC-RAG improves retrieval.",
     stack: ["Python", "FastAPI", "ChromaDB", "LangChain", "Docker", "OpenAI"],
     metrics: [
-      { name: "ERC-RAG MRR", score: "0.62" },
-      { name: "ERC-RAG NDCG@5", score: "0.83" },
-      { name: "ERC-RAG ROUGE-2 F1", score: "0.68" },
-      { name: "ERC-RAG BLEU-2", score: "0.65" },
+      { category: "Retrieval", name: "MRR", score: "0.62" },
+      { category: "Retrieval", name: "NDCG@5", score: "0.83" },
+      { category: "Generation · GPT-5.0 mini", name: "ROUGE-2 F1", score: "0.68" },
+      { category: "Generation · GPT-5.0 mini", name: "BLEU-2", score: "0.65" },
     ],
     dataset: [
-      { label: "VEID documents", value: "27,682" },
-      { label: "Chunks", value: "120,165" },
+      { label: "VNEIQAD questions", value: "1,000" },
+      { label: "VEID chunks", value: "120,165" },
     ],
     links: [
       { label: "GitHub", href: "https://github.com/chinghia689/economy_rag_ebd_kmeans_llm_TIEN_PHONG_TT_VL_2026" },
-      { label: "Demo", href: "https://vietecochat.site/" },
       { label: "Paper", href: "/papers/erc-rag.pdf" },
     ],
     architecture: [
@@ -90,50 +86,27 @@ export const projects = [
       "LLM",
       "Answer",
     ],
-    gallery: ["Screenshot", "Architecture", "Chart", "GIF"],
-  },
-  {
-    slug: "polyaqua",
-    title: "PolyAqua",
-    subtitle: "Aquaculture AI platform",
-    icon: Bot,
-    overview:
-      "A production-oriented aquaculture assistant combining YOLO detection, RAG search and operational dashboards.",
-    motivation:
-      "Farm operators need fast visual screening and reliable answers from internal aquaculture documents without switching tools.",
-    stack: ["YOLO", "RAG", "Disease Detection", "BM25", "ChromaDB", "RRF"],
-    metrics: [
-      { name: "Detection", score: "YOLO" },
-      { name: "Retrieval", score: "RRF" },
-      { name: "Search", score: "BM25" },
-      { name: "Vector DB", score: "Chroma" },
-    ],
-    dataset: [
-      { label: "Vision task", value: "Disease Detection" },
-      { label: "Knowledge base", value: "Aquaculture RAG" },
-    ],
-    links: [
-      { label: "GitHub", href: "https://github.com/chinghia689/AI_polyculture" },
-      { label: "Demo", href: "https://polyaqua.site/app" },
-    ],
-    architecture: ["Image", "YOLO", "Diagnosis", "Query", "Hybrid Search", "Answer"],
-    gallery: ["Detection", "Knowledge Base", "Dashboard", "Report"],
+    gallery: [],
   },
   {
     slug: "legal-rag",
     title: "Legal RAG",
     subtitle: "Dockerized legal assistant",
+    period: "Jan–Mar 2026",
     icon: ShieldCheck,
     overview:
-      "A Vietnamese legal-document RAG prototype with hybrid ChromaDB/BM25 retrieval and a FastAPI, LangGraph, and React application.",
+      "A learning-oriented Vietnamese legal-document RAG application with ChromaDB and BM25 hybrid retrieval, LangGraph orchestration, FastAPI, and Docker Compose.",
     motivation:
-      "Legal search needs traceable source retrieval and careful evaluation of both retrieved provisions and generated answers.",
+      "The prototype explores document processing, hybrid retrieval, and context-grounded question answering over legal, IT, and cybersecurity documents.",
+    contribution:
+      "Built document processing and retrieval flows, connected the LangGraph question-answering workflow, and containerized the application for deployment.",
+    evaluation:
+      "Indexed 6 documents into 1,035 chunks. In a preliminary set of 30 questions generated from article titles, the expected source file and article appeared in the merged ChromaDB + BM25 top 20 for 27 questions (90%).",
+    limitations:
+      "This is a small preliminary retrieval evaluation. It measures source/article retrieval only; answer accuracy and faithfulness have not been evaluated.",
     stack: ["Docker", "Nginx", "LangGraph", "React", "FastAPI", "RAG"],
     metrics: [
-      { name: "Retrieval pilot", score: "27/30" },
-      { name: "Retrieval scope", score: "Top-20" },
-      { name: "Answer accuracy", score: "Not evaluated" },
-      { name: "Workflow", score: "LangGraph" },
+      { category: "Retrieval", name: "Expected source + article in top 20", score: "27/30 (90%)" },
     ],
     dataset: [
       { label: "Source documents", value: "6" },
@@ -141,41 +114,16 @@ export const projects = [
     ],
     links: [
       { label: "GitHub", href: "https://github.com/chinghia689/vietnamese-legal-rag" },
-      { label: "Demo", href: "https://lawchat.me/" },
     ],
     architecture: ["Question", "Router", "Retriever", "LangGraph", "Citation", "Answer"],
-    gallery: ["Chat", "Sources", "Containers", "Deploy"],
-  },
-  {
-    slug: "cifake",
-    title: "CIFAKE",
-    subtitle: "AI-generated image classifier",
-    icon: Database,
-    overview:
-      "Computer vision experiment for distinguishing synthetic and real images with clean evaluation reporting.",
-    motivation:
-      "AI image detection is useful for media verification workflows and gives a compact benchmark for model evaluation.",
-    stack: ["Python", "PyTorch", "Computer Vision", "Evaluation"],
-    metrics: [
-      { name: "Task", score: "Binary" },
-      { name: "Domain", score: "Vision" },
-      { name: "Output", score: "Report" },
-      { name: "Focus", score: "Robustness" },
-    ],
-    dataset: [
-      { label: "Problem", value: "Real vs AI" },
-      { label: "Pipeline", value: "Train/Eval" },
-    ],
-    links: [{ label: "GitHub", href: "https://github.com/chinghia689/AI_Engineer/tree/main/Fake_Real" }],
-    architecture: ["Image", "Preprocess", "Model", "Classifier", "Score"],
-    gallery: ["Samples", "Training", "Metrics", "Confusion Matrix"],
+    gallery: [],
   },
 ];
 
 export const publications = [
   {
-    title: "ERC-RAG",
-    venue: "Submitted to ICEIR 2026 · Under review",
+    title: "ERC-RAG: An Energy-based Retrieval Clustering for RAG in Vietnamese Economy Chatbots",
+    venue: "Co-author · Submitted to ICEIR 2026 · Under review",
     href: "/papers/erc-rag.pdf",
     icon: FileText,
   },
@@ -183,9 +131,13 @@ export const publications = [
 
 export const experience = [
   {
-    year: "2026",
-    title: "AI Engineer Intern",
-    company: "Tien Phong Engineering",
+    year: "Mar–Jul 2026",
+    title: "AI Engineer Intern (Generative AI)",
+    company: "ADHIGHTECH (Tien Phong Engineering Technology Co., Ltd.) · Can Tho, Vietnam",
+    bullets: [
+      "Implemented dense, BM25, hybrid, and cluster-based retrieval for Vietnamese economic question answering, including energy-distance ranking and LLM relevance filtering.",
+      "Built a FastAPI REST service and containerized the pipeline with Docker Compose on Ubuntu Linux.",
+    ],
     icon: Server,
   },
 ];
@@ -193,12 +145,7 @@ export const experience = [
 export const awards = [
   {
     title: "Olympic AI",
-    result: "Finalist",
-    icon: Trophy,
-  },
-  {
-    title: "Research Portfolio",
-    result: "LLM & RAG Focus",
+    result: "Finalist · FPTU Can Tho · May 2026",
     icon: Award,
   },
 ];
@@ -212,12 +159,9 @@ export const contactLinks = [
 
 const iconByName = {
   BrainCircuit,
-  Bot,
   ShieldCheck,
-  Database,
   FileText,
   Server,
-  Trophy,
   Award,
   Mail,
   Linkedin,
@@ -227,7 +171,6 @@ const iconByName = {
 
 export type PortfolioContent = {
   profile: typeof profile;
-  timeline: typeof timeline;
   skills: typeof skills;
   projects: Array<Omit<(typeof projects)[number], "icon" | "gallery"> & {
     icon: string;
@@ -260,7 +203,6 @@ function getDefaultPortfolioContent(): PortfolioContent {
     Object.entries(iconByName).find(([, component]) => component === icon)?.[0] ?? "FileText";
   return {
     profile,
-    timeline,
     skills,
     projects: projects.map(({ icon, ...project }) => ({ ...project, icon: iconName(icon) })),
     publications: publications.map(({ icon, ...item }) => ({ ...item, icon: iconName(icon) })),
@@ -274,7 +216,31 @@ export async function getPortfolioContent(): Promise<PortfolioContent> {
   if (sql) {
     await ensurePortfolioTable(sql);
     const rows = await sql`SELECT content FROM portfolio_content WHERE id = 'main'`;
-    return (rows[0]?.content as PortfolioContent | undefined) ?? getDefaultPortfolioContent();
+    const stored = rows[0]?.content as PortfolioContent | undefined;
+    if (!stored) return getDefaultPortfolioContent();
+
+    // Older CMS records use percentage-based skills and placeholder galleries.
+    // Fall back to the CV-aligned defaults until the admin saves the new schema.
+    if (!Array.isArray(stored.skills) || !stored.skills.every((skill) =>
+      Boolean(skill) && typeof skill.category === "string" && Array.isArray(skill.items))) {
+      const defaults = getDefaultPortfolioContent();
+      const storedAvatar = stored.profile?.avatar;
+      const savedGalleryBySlug = new Map(
+        (stored.projects ?? []).map((project) => [
+          project.slug,
+          (Array.isArray(project.gallery) ? project.gallery : []).filter((media) => typeof media !== "string" && Boolean(media.url)),
+        ]),
+      );
+      return {
+        ...defaults,
+        profile: { ...defaults.profile, avatar: storedAvatar || defaults.profile.avatar },
+        projects: defaults.projects.map((project) => ({
+          ...project,
+          gallery: savedGalleryBySlug.get(project.slug) ?? project.gallery,
+        })),
+      };
+    }
+    return stored;
   }
 
   let stored: string;

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s | Ngo Chi Nghia",
   },
   description:
-    "AI Engineer portfolio focused on LLM, RAG, computer vision, FastAPI, Docker and production-ready AI systems.",
+    "Entry-level AI Engineer portfolio focused on Generative AI, LLM applications, Vietnamese RAG, retrieval evaluation, FastAPI and Docker.",
   keywords: [
     "Ngo Chi Nghia",
     "AI Engineer",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ngo Chi Nghia | AI Engineer",
     description:
-      "Production-ready AI systems with Retrieval-Augmented Generation, FastAPI, Docker and LangGraph.",
+      "GenAI and Vietnamese RAG projects, retrieval evaluation, FastAPI services and Docker deployment.",
     url: "https://portfolio-chinghia.vercel.app",
     siteName: "Ngo Chi Nghia Portfolio",
     locale: "en_US",

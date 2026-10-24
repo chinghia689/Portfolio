@@ -29,13 +29,13 @@ export default async function PublicationsPage() {
                 <Icon className="h-8 w-8 text-primary" />
                 <h2 className="mt-5 text-2xl font-semibold">{publication.title}</h2>
                 <p className="mt-2 text-muted-foreground">{publication.venue}</p>
-                <Link
+                {publication.href ? <Link
                   href={publication.href}
                   className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary"
                 >
                   Read Paper
                   <ArrowUpRight className="h-4 w-4" />
-                </Link>
+                </Link> : null}
               </Card>
             </FadeIn>
           );
