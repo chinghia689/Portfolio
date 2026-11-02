@@ -20,7 +20,7 @@ export const profile = {
   summary:
     "I build and evaluate RAG systems for Vietnamese domains, spanning retrieval methods, retrieval and answer evaluation, FastAPI services, and Docker-based deployment.",
   email: "chinghia689@gmail.com",
-  location: "Can Tho, Vietnam",
+  location: "Can Tho, Vietnam · Open to relocation and on-site work",
   github: "https://github.com/chinghia689",
   linkedin: "https://www.linkedin.com/in/chinghia010804/",
   resume: "/resume.pdf",
@@ -34,6 +34,13 @@ export const navItems = [
   { href: "/resume", label: "Resume" },
   { href: "/contact", label: "Contact" },
 ];
+
+export const resumeEducation = {
+  institution: "Nam Can Tho University",
+  location: "Can Tho, Vietnam",
+  degree: "Bachelor of Engineering in Information Technology",
+  detail: "GPA 3.44/4.00 · Graduated August 2026",
+};
 
 export const skills = [
   { category: "Programming", items: ["Python"] },
@@ -123,7 +130,7 @@ export const projects = [
 export const publications = [
   {
     title: "ERC-RAG: An Energy-based Retrieval Clustering for RAG in Vietnamese Economy Chatbots",
-    venue: "Co-author · Submitted to ICEIR 2026 · Under review",
+    venue: "Accepted at EAI AICON 2026 · Camera-ready in preparation",
     href: "/papers/erc-rag.pdf",
     icon: FileText,
   },
@@ -131,7 +138,7 @@ export const publications = [
 
 export const experience = [
   {
-    year: "Mar–Jul 2026",
+    year: "Jan 2026–Present",
     title: "AI Engineer Intern (Generative AI)",
     company: "ADHIGHTECH (Tien Phong Engineering Technology Co., Ltd.) · Can Tho, Vietnam",
     bullets: [
