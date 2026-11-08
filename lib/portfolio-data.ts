@@ -210,6 +210,8 @@ export const contactLinks = [
   { label: "Location", value: profile.location, href: "#", icon: MapPin },
 ];
 
+const PORTFOLIO_CONTENT_VERSION = 2;
+
 const iconByName = {
   BrainCircuit,
   ShieldCheck,
@@ -223,6 +225,7 @@ const iconByName = {
 } as const;
 
 export type PortfolioContent = {
+  contentVersion: number;
   profile: typeof profile;
   skills: typeof skills;
   projects: Array<Omit<(typeof projects)[number], "icon" | "gallery"> & {
@@ -255,6 +258,7 @@ function getDefaultPortfolioContent(): PortfolioContent {
   const iconName = (icon: unknown) =>
     Object.entries(iconByName).find(([, component]) => component === icon)?.[0] ?? "FileText";
   return {
+    contentVersion: PORTFOLIO_CONTENT_VERSION,
     profile,
     skills,
     projects: projects.map(({ icon, ...project }) => ({ ...project, icon: iconName(icon) })),
@@ -272,9 +276,9 @@ export async function getPortfolioContent(): Promise<PortfolioContent> {
     const stored = rows[0]?.content as PortfolioContent | undefined;
     if (!stored) return getDefaultPortfolioContent();
 
-    // Older CMS records use percentage-based skills and placeholder galleries.
-    // Fall back to the CV-aligned defaults until the admin saves the new schema.
-    if (!Array.isArray(stored.skills) || !stored.skills.every((skill) =>
+    // Migrate older CMS content to the current CV-aligned defaults while
+    // retaining media that was uploaded through the admin panel.
+    if (stored.contentVersion !== PORTFOLIO_CONTENT_VERSION || !Array.isArray(stored.skills) || !stored.skills.every((skill) =>
       Boolean(skill) && typeof skill.category === "string" && Array.isArray(skill.items))) {
       const defaults = getDefaultPortfolioContent();
       const storedAvatar = stored.profile?.avatar;
