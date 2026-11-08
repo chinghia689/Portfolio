@@ -16,9 +16,9 @@ import { neon } from "@neondatabase/serverless";
 
 export const profile = {
   name: "Ngo Chi Nghia",
-  role: "AI Engineer | GenAI, LLM & RAG",
+  role: "AI Engineer | RAG, AI Agents, NLP & Computer Vision",
   summary:
-    "I build and evaluate RAG systems for Vietnamese domains, spanning retrieval methods, retrieval and answer evaluation, FastAPI services, and Docker-based deployment.",
+    "I build AI systems across RAG, AI agents, NLP, and computer vision, from retrieval and model evaluation to FastAPI services and Docker-based deployment.",
   email: "chinghia689@gmail.com",
   location: "Can Tho, Vietnam · Open to relocation and on-site work",
   github: "https://github.com/chinghia689",
@@ -43,16 +43,52 @@ export const resumeEducation = {
 };
 
 export const skills = [
-  { category: "Programming", items: ["Python"] },
-  { category: "LLM & RAG", items: ["OpenAI API", "Gemini API", "Groq API", "RAG", "Prompt engineering"] },
-  { category: "Retrieval", items: ["multilingual-E5", "ChromaDB", "BM25", "Hybrid retrieval", "Reciprocal Rank Fusion (RRF)", "K-Means", "Energy distance"] },
-  { category: "Evaluation", items: ["MRR", "NDCG@5", "ROUGE-2", "BLEU-2"] },
-  { category: "Backend & Deployment", items: ["FastAPI", "LangChain", "LangGraph", "Docker", "Docker Compose", "Ubuntu Linux"] },
-  { category: "Tools & Data", items: ["Git", "GitHub", "NumPy", "Pandas", "Claude Code", "OpenAI Codex CLI"] },
+  { category: "Programming", items: ["Python", "JavaScript", "C/C++"] },
+  { category: "AI & Machine Learning", items: ["PyTorch", "TensorFlow", "YOLOv8", "Hugging Face Transformers", "RAG", "LangChain", "LangGraph", "scikit-learn", "Sentence Transformers", "Prompt engineering"] },
+  { category: "LLM APIs", items: ["OpenAI", "Google Gemini", "Groq", "Ollama"] },
+  { category: "Retrieval & Evaluation", items: ["multilingual-E5", "ChromaDB", "BM25", "Hybrid retrieval", "Reciprocal Rank Fusion (RRF)", "K-Means", "Energy distance", "MRR", "NDCG@5", "ROUGE-2", "BLEU-2"] },
+  { category: "Backend & Deployment", items: ["FastAPI", "Pydantic", "REST API", "JWT", "OAuth 2.0", "Docker", "Docker Compose", "Ubuntu Linux"] },
+  { category: "Data & Tools", items: ["SQLite", "PostgreSQL", "Git", "NumPy", "Pandas", "Claude Code CLI", "OpenAI Codex CLI"] },
   { category: "Languages", items: ["Vietnamese (Native)", "English (VSTEP B1)"] },
 ];
 
 export const projects = [
+  {
+    slug: "agent-newsroom",
+    title: "Agent Newsroom",
+    subtitle: "Automated Football News to Vertical Video",
+    period: "Jul–Oct 2026",
+    icon: BrainCircuit,
+    overview: "An end-to-end agent that turns football RSS feeds into vertical videos, from story discovery and cross-checking to publishing.",
+    motivation: "Automate the editorial workflow while making source quality and uncertainty visible before a story is published.",
+    contribution: "Built story clustering, cross-checking with Ollama and Qwen3, script generation, FFmpeg rendering, YouTube publishing, and a FastAPI + React review interface with per-stage latency telemetry.",
+    evaluation: "The review interface reports mean, p50, and p95 latency for each pipeline stage. Conflicting sources cause stories to be downgraded to uncertain.",
+    limitations: "Automated reporting still requires editorial review, especially when sources conflict or provide incomplete context.",
+    stack: ["Python", "FastAPI", "React", "Ollama", "Qwen3", "FFmpeg"],
+    metrics: [{ category: "Telemetry", name: "Per-stage latency", score: "Mean · p50 · p95" }],
+    dataset: [{ label: "Input", value: "Football RSS feeds" }, { label: "Output", value: "Vertical video" }],
+    links: [{ label: "GitHub", href: "https://github.com/chinghia689" }],
+    architecture: ["RSS Feeds", "Story Clustering", "Source Checks", "LLM Script", "FFmpeg", "Review", "YouTube"],
+    gallery: [],
+  },
+  {
+    slug: "polyaqua-agent",
+    title: "PolyAqua Agent",
+    subtitle: "AI Assistant for Shrimp–Crab Polyculture",
+    period: "Apr–May 2026",
+    icon: BrainCircuit,
+    overview: "An AI assistant combining shrimp disease image classification, document-grounded treatment guidance, and aquaculture calculators.",
+    motivation: "Help farmers connect visual disease signals and pond conditions with practical, document-grounded recommendations.",
+    contribution: "Built a FastAPI service with YOLOv8n-cls for four disease classes, a multilingual-E5 and BM25 hybrid RAG pipeline using RRF and ChromaDB, plus calculators for lime dosage, probiotics, and stocking density.",
+    evaluation: "The image classifier achieved 84% validation accuracy and 78% test accuracy. The knowledge base contains 4,593 vectors from 13 technical documents.",
+    limitations: "Classification and generated treatment guidance are decision-support tools and should be checked against local aquaculture expertise.",
+    stack: ["Python", "FastAPI", "YOLOv8", "multilingual-E5", "BM25", "ChromaDB", "Docker Compose"],
+    metrics: [{ category: "Image classification", name: "Validation accuracy", score: "84%" }, { category: "Image classification", name: "Test accuracy", score: "78%" }, { category: "Knowledge base", name: "Indexed vectors", score: "4,593 · 13 documents" }],
+    dataset: [{ label: "Disease classes", value: "4" }, { label: "Technical documents", value: "13" }],
+    links: [{ label: "GitHub", href: "https://github.com/chinghia689" }],
+    architecture: ["Disease Image", "YOLOv8n-cls", "Diagnosis", "Hybrid RAG", "Pond Parameters", "Treatment Plan"],
+    gallery: [],
+  },
   {
     slug: "erc-rag",
     title: "ERC-RAG",
@@ -138,12 +174,13 @@ export const publications = [
 
 export const experience = [
   {
-    year: "Jan 2026–Present",
-    title: "AI Engineer Intern (Generative AI)",
+    year: "Mar 2026–Present",
+    title: "AI Engineer (Generative AI)",
     company: "ADHIGHTECH (Tien Phong Engineering Technology Co., Ltd.) · Can Tho, Vietnam",
     bullets: [
-      "Implemented dense, BM25, hybrid, and cluster-based retrieval for Vietnamese economic question answering, including energy-distance ranking and LLM relevance filtering.",
-      "Built a FastAPI REST service and containerized the pipeline with Docker Compose on Ubuntu Linux.",
+      "Raised ROUGE-2 F1 from 0.49 to 0.68 on a 120K-chunk Vietnamese economic QA corpus by designing energy-distance cluster ranking with LLM relevance filtering; achieved MRR 0.62 and NDCG@5 0.83.",
+      "Deployed the question-answering pipeline as a FastAPI REST service with Docker Compose on Ubuntu.",
+      "Co-authored ERC-RAG, accepted at EAI AICON 2026; contributed to idea development, implementation, and experiments.",
     ],
     icon: Server,
   },
@@ -151,8 +188,17 @@ export const experience = [
 
 export const awards = [
   {
-    title: "Olympic AI",
-    result: "Finalist · FPTU Can Tho · May 2026",
+    title: "1st Place · Aspect-Based Sentiment Analysis",
+    result: "FPTU Can Tho Olympic AI 2026 · Individual on-site final · 15 finalists from 100+ participants · May 2026",
+    evidence: "/awards/top1.png",
+    evidenceAlt: "Final private leaderboard showing Ngo Chi Nghia in first place for Aspect Sentiment Analysis",
+    icon: Award,
+  },
+  {
+    title: "4th Place · Rice Variety Image Classification",
+    result: "FPTU Can Tho Olympic AI 2026 · Individual on-site final · 15 finalists from 100+ participants · May 2026",
+    evidence: "/awards/top4.png",
+    evidenceAlt: "Final private leaderboard showing Ngo Chi Nghia in fourth place for rice variety image classification",
     icon: Award,
   },
 ];

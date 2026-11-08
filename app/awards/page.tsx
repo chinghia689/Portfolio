@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FadeIn } from "@/components/motion";
 import { Card } from "@/components/ui/card";
 import { getPortfolioContent, resolvePortfolioIcon } from "@/lib/portfolio-data";
@@ -23,10 +24,23 @@ export default async function AwardsPage() {
           const Icon = resolvePortfolioIcon(award.icon);
           return (
             <FadeIn key={award.title}>
-              <Card className="p-6">
-                <Icon className="h-8 w-8 text-primary" />
-                <h2 className="mt-5 text-2xl font-semibold">{award.title}</h2>
-                <p className="mt-2 text-muted-foreground">{award.result}</p>
+              <Card className="overflow-hidden">
+                {"evidence" in award && award.evidence ? (
+                  <a href={award.evidence} target="_blank" rel="noreferrer" className="block border-b border-border bg-muted">
+                    <Image
+                      src={award.evidence}
+                      alt={("evidenceAlt" in award && award.evidenceAlt) || award.title}
+                      width={1348}
+                      height={604}
+                      className="h-auto w-full"
+                    />
+                  </a>
+                ) : null}
+                <div className="p-6">
+                  <Icon className="h-8 w-8 text-primary" />
+                  <h2 className="mt-5 text-2xl font-semibold">{award.title}</h2>
+                  <p className="mt-2 text-muted-foreground">{award.result}</p>
+                </div>
               </Card>
             </FadeIn>
           );

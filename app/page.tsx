@@ -28,7 +28,7 @@ export default function Home() {
 async function HomeContent({ contentPromise }: { contentPromise: ReturnType<typeof getPortfolioContent> }) {
   const content = await contentPromise;
   const { awards, experience, profile, projects, publications, skills } = content;
-  const featuredProjects = projects.filter((project) => ["erc-rag", "legal-rag"].includes(project.slug));
+  const featuredProjects = projects;
   const links = [
     { label: "Email", value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
     { label: "LinkedIn", value: profile.linkedin.replace(/^https?:\/\//, ""), href: profile.linkedin, icon: Linkedin },
@@ -65,7 +65,7 @@ async function HomeContent({ contentPromise }: { contentPromise: ReturnType<type
               <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
                 <Link href={profile.linkedin} target="_blank" className="hover:text-foreground">LinkedIn</Link>
                 <Link href={`mailto:${profile.email}`} className="hover:text-foreground">{profile.email}</Link>
-                <span>{profile.location} · Open to relocation and on-site work</span>
+                <span>{profile.location}</span>
               </div>
             </div>
           </FadeIn>
